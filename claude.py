@@ -14,8 +14,6 @@ from dotenv import load_dotenv, dotenv_values
 from pymongo import MongoClient
 import datetime
 from mongo_config import MONGODB_CONFIG
-import logging
-
 
 load_dotenv()
 app = Flask(__name__)
