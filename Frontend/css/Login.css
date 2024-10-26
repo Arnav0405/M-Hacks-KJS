@@ -10,7 +10,7 @@ body, html {
 }
 
 .background {
-    background-image: url('LoginBg.png'); /* Add your background image here */
+    background-image: url('../pictures/LoginBg.png'); /* Add your background image here */
     background-size: cover;
     background-position: center;
     height: 100vh;
