@@ -1,58 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
-    <link rel="stylesheet" href="../HomePage.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="..\\styles.css">
 </head>
 <body>
-    <header>
-        <div class="logo">Ghar<span>से</span></div>
-        <nav class="nav-links">
-            <a href="contact.html">Contact us</a>
-            <a href="about.html">About</a>
-            <a href="Login.html"><button class="login-button">Login</button></a>
-            
-        </nav>
-    </header>
+  <div class="sidebar">
+    <div class="profile">
+      <img src="..\pictures\profile.png" alt="Profile">
+    </div>
+    <ul>
+      <li><a href="HomePage.html">Home</a></li>
+      <li><a href="contact.html">Contact us</a></li>
+      <li><a href="about.html">About us</a></li>
+      <li><a href="HomePage.html">Logout</a></li>
+    </ul>
+  </div>
 
-    <main>
-        <section class="intro">
-            <div class="intro-text">
-                <h1>Empower Your Home Office</h1>
-                <p>Unlock productivity and comfort with tailored solutions for every work-from-home professional.</p>
-                <a href="Login.html"><button class="join-now">Join now →</button></a>
-            </div>
-            <div class="intro-image">
-                <img src="../pictures/Dashboard_image.png" alt="Empower Home Office">
-            </div>
-        </section>
-        <div class="carousel">
-            <!-- Slide 1 -->
-            <div class="carousel-slide" id="slide1">
-                <img src="../pictures/slide1.png" alt="Slide 1">
-            </div>
-            
-            <!-- Slide 2 -->
-            <div class="carousel-slide" id="slide2">
-                <img src="../pictures/slide2.png" alt="Slide 2">
-            </div>
-            
-            <!-- Slide 3 -->
-            <div class="carousel-slide" id="slide3">
-                <img src="../pictures/slide3.png" alt="Slide 3">
-            </div>
-    
-            <!-- Navigation Dots -->
-            <div class="carousel-navigation">
-                <a href="#slide1" class="carousel-dot"></a>
-                <a href="#slide2" class="carousel-dot"></a>
-                <a href="#slide3" class="carousel-dot"></a>
-            </div>
+  <div class="content">
+    <div class="welcome">
+      <h2>Welcome back, Mihika</h2>
+      
+      <p>Always stay updated in your student portal</p>
+      <img src="..\pictures\Dashboard_image.png" alt="">
+    </div>
+    <div class="cards">
+      <div class="task-card">
+        <h3>Task</h3>
+        <ul>
+          <li>Team Meeting Preparation</li>
+          <li>Client Follow-Ups</li>
+        </ul>
+        <a href="more-task.html"><button>More Tasks</button></a>
+      </div>
+      <div class="gmail-card">
+        <h3>Gmail</h3>
+        <div class="email">
+          <h4>Meeting Reminder</h4>
+          <p>This is a friendly reminder...</p>
         </div>
-       
-        
-    </main>
+        <div class="email">
+          <h4>Project Update</h4>
+          <p>I wanted to provide a quick update...</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
