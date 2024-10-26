@@ -11,22 +11,43 @@ import google.auth.exceptions
 import json
 import google.generativeai as genai
 from dotenv import load_dotenv, dotenv_values
+from pymongo import MongoClient
+import datetime
+from mongo_config import MONGODB_CONFIG
+import logging
+
 
 load_dotenv()
 app = Flask(__name__)
-app.secret_key = 'arnav'  # Change this to a secure secret key
+app.secret_key = 'arnav'  
 
 # Configure Google OAuth2
 CREDENTIALS_FILE = "credentials.json"  # Changed from CLIENT_SECRETS_FILE
 SCOPES = ['https://www.googleapis.com/auth/gmail.readonly']
 
 # Configure Gemini AI
-
-genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
+genai.configure(api_key=os.getenv("GEMINI_token"))
 model = genai.GenerativeModel('gemini-1.5-flash')
 
 # Make sure this matches exactly with what you set in Google Cloud Console
 REDIRECT_URI = 'http://localhost:5000/oauth2callback'
+
+# MongoDB Configuration
+# MongoDB Atlas connection string (replace with your actual connection string)
+
+MONGODB_URI = "MONGODB_URI"
+DB_NAME = "email_analysis_db"
+COLLECTION_NAME = "email_tasks"
+
+# Initialize MongoDB client
+
+try:
+    client = MongoClient(MONGODB_URI)
+    db = client[DB_NAME]
+    collection = db[COLLECTION_NAME]
+    print("Connected to MongoDB successfully!")
+except Exception as e:
+    print(f"Error connecting to MongoDB: {e}")
 
 def get_flow():
     flow = Flow.from_client_secrets_file(
@@ -115,9 +136,10 @@ def analyze_email_with_gemini(subject, sender, body):
             f"Body: {cleaned_body}\n\n"
             f"Create a task summary in JSON format with the following fields:\n"
             f"- task (string): Brief description of the main task\n"
-            f"- priority (string): High/Medium/Low\n"
+            f"- priority (string): High/Medium/Low based on the sentiment of the body, if it is urgent select high, if it is more than 30 days keep priority Low\n"
             f"- due_date (string): Estimated due date based on content\n"
             f"- category (string): Type of task"
+            f"Do not provide anything that has not been asked of. There is no need of explanation. Just provide the JSON object."
         )
 
         response = model.generate_content(prompt)
@@ -213,6 +235,13 @@ def get_emails():
                 print(f"Body sample: {cleaned_body[:100]}...")
 
                 analysis = analyze_email_with_gemini(cleaned_subject, cleaned_sender, cleaned_body)
+                # Store the analysis in MongoDB
+                email_data = {
+                    "subject": cleaned_subject,
+                    "sender": cleaned_sender
+                }
+
+                mongo_id = store_email_analysis(email_data, analysis)
 
                 analyzed_emails.append({
                     "subject": cleaned_subject,
@@ -272,13 +301,71 @@ def get_emails():
             """
 
         html_response += "</body></html>"
+        print("Responded")
         return html_response
 
     except Exception as e:
         print(f"Error in get_emails: {str(e)}")
         return redirect(url_for('authorize'))
-    
 
+def store_email_analysis(email_data, analysis):
+    try:
+        document = {
+            "email_subject": email_data["subject"],
+            "email_sender": email_data["sender"],
+            "task": analysis.get("task", "N/A"),
+            "priority": analysis.get("priority", "Low"),
+            "due_date": analysis.get("due_date", "N/A"),
+            "category": analysis.get("category", "Unknown"),
+            "created_at": datetime.datetime.utcnow()
+        }
+        
+        result = collection.insert_one(document)
+        print(f"Analysis stored in MongoDB with ID: {result.inserted_id}")
+        return result.inserted_id
+    except Exception as e:
+        print(f"Error storing analysis in MongoDB: {e}")
+        return None
+
+@app.route('/view_stored_analyses')
+def view_stored_analyses():
+    try:
+        stored_analyses = list(collection.find().sort("created_at", -1))
+        
+        html_response = """
+        <html>
+        <head>
+            <style>
+                /* ... [previous styles] ... */
+            </style>
+        </head>
+        <body>
+            <h1>Stored Email Analyses</h1>
+        """
+
+        for analysis in stored_analyses:
+            priority_class = f"priority-{analysis.get('priority', 'low').lower()}"
+            html_response += f"""
+            <div class="email-card">
+                <h3 class="email-subject">{analysis.get('email_subject', 'No Subject')}</h3>
+                <p class="email-sender">From: {analysis.get('email_sender', 'No Sender')}</p>
+                <div class="email-analysis">
+                    <p>Task: {analysis.get('task', 'N/A')}</p>
+                    <p class="{priority_class}">Priority: {analysis.get('priority', 'N/A')}</p>
+                    <p>Due Date: {analysis.get('due_date', 'N/A')}</p>
+                    <p>Category: {analysis.get('category', 'N/A')}</p>
+                    <p>Stored: {analysis.get('created_at', 'N/A')}</p>
+                </div>
+            </div>
+            """
+
+        html_response += "</body></html>"
+        return html_response
+
+    except Exception as e:
+        print(f"Error retrieving stored analyses: {e}")
+        return "Error retrieving stored analyses"
+    
 os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 os.environ['OAUTHLIB_RELAX_TOKEN_SCOPE'] = '1' 
 
