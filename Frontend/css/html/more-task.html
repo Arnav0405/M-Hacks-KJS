@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>More Tasks</title>
+  <link rel="stylesheet" href="more-task.css">
+</head>
+<body>
+  <div class="tasks-page">
+    <h2>More Tasks</h2>
+    <div class="task-input">
+      <input type="text" id="taskInput" placeholder="Enter a new task">
+      <button onclick="addTask()">Add Task</button>
+    </div>
+    <ul id="taskList">
+      <li>
+        <span>Prepare Presentation Slides</span>
+        <button onclick="removeTask(this)">Remove</button>
+        <button onclick="toggleComplete(this)">Complete</button>
+      </li>
+      <li>
+        <span>Review Project Timeline</span>
+        <button onclick="removeTask(this)">Remove</button>
+        <button onclick="toggleComplete(this)">Complete</button>
+      </li>
+      <li>
+        <span>Client Follow-Ups</span>
+        <button onclick="removeTask(this)">Remove</button>
+        <button onclick="toggleComplete(this)">Complete</button>
+      </li>
+    </ul>
+    <a href="Dashboard.html"><button>Back to Dashboard</button></a>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

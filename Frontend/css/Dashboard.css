@@ -1,0 +1,114 @@
+/* styles.css */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #e0f7fa;
+}
+
+.container {
+    display: flex;
+}
+
+.sidebar {
+    width: 20%;
+    background-color: #cfd8dc;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.profile-pic {
+    width: 50px;
+    height: 50px;
+    background-color: #000;
+    border-radius: 50%;
+    margin-bottom: 20px;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+nav ul li {
+    margin: 20px 0;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #000;
+    font-weight: bold;
+}
+
+.main-content {
+    width: 80%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.welcome-section {
+    background-color: #fff;
+    padding: 20px;
+    height: 235px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.welcome-section h1 {
+    margin: 0;
+    font-size: 60px;
+}
+
+.welcome-section p {
+    margin: 10px 0 0;
+}
+
+.user-image {
+    width: 100px;
+    height: 100px;
+    background-size: 100px;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.task-section, .gmail-section {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.task-section h2, .gmail-section h2 {
+    margin: 0 0 20px;
+}
+
+.task-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.task-section ul li {
+    margin: 10px 0;
+}
+
+.task-section button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.gmail-section .email {
+    background-color: #f1f1f1;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.gmail-section .email h3 {
+    margin: 0;
+}

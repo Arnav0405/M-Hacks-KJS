@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="/css/Login.css">
+    <style>
+        .login-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #4CAF50; /* Green background */
+    color: white;
+    text-align: center;
+    text-decoration: none; /* Remove underline */
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px 0; /* Adjust margin as needed */
+}
+
+.login-btn:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+
+    </style>
+</head>
+<body>
+    <div class="background">
+        <div class="login-container">
+            <h2>Login</h2>
+            <form>
+                <label for="username">Enter Username:</label>
+                <input type="text" id="username" placeholder="Enter Username" required>
+                
+                <label for="password">Password:</label>
+                <input type="password" id="password" placeholder="Enter Password" required>
+                
+                <!-- Change button to anchor for login -->
+                <a href="Dashboard.html" class="login-btn">Login</a>
+                
+                <div class="divider">
+                    <hr><span>Or login with</span><hr>
+                </div>
+                
+                <button type="button" class="google-btn">
+                    <img src="GoogleLogo.png" alt="Google Logo">
+                    Login with Google
+                </button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
